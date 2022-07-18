@@ -31,8 +31,8 @@
 }
 
 .router-link-active {
-    color: white;
     text-decoration: none;
+    color: #008390;
 }
 
 .el-dropdown {
@@ -61,12 +61,13 @@
     color: white;
     cursor: pointer;
 }
-.router-link-active{
-    text-decoration: none;
-}
 .el-menu-vertical-demo{
    height: 100%;
 }
 .menuitem:hover{
     background-color: aquamarine;
+}
+.logo-title{
+    color: #ffffff;
+    text-decoration: none;
 }

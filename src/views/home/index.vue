@@ -5,7 +5,7 @@
     <el-header>
       <div>
         <img :src="imageLogo" style="border-radius: 50%;width: 60px;height: 60px;">
-        <router-link to="/index" class="router-link-active">&nbsp;&nbsp;FACE-UI</router-link>
+        <router-link to="/desktop" class="logo-title">&nbsp;&nbsp;FACE-UI</router-link>
       </div>
       <el-dropdown>
         <span class="el-dropdown-link" >
@@ -22,7 +22,6 @@
 
       <!--侧边栏-->
       <el-aside style="width: 200px">
-
         <el-menu text-color="#008390"  active-text-color="#ade2e0" class="el-menu-vertical-demo" >
           <el-submenu index="1">
 
@@ -31,14 +30,19 @@
               <span slot="title">人脸管理</span>
             </template>
 
-            <el-menu-item-group>
-              <el-menu-item index="1-1">人脸列表</el-menu-item>
-              <el-menu-item index="1-2">日志列表</el-menu-item>
-            </el-menu-item-group>
+            <router-link class="router-link-active"  to="/faceList">
+                <el-menu-item index="1-1">
+                  人脸列表
+                </el-menu-item>
+            </router-link>
+            <router-link class="router-link-active" to="/faceLog">
+                <el-menu-item index="1-2">
+                  日志列表
+                </el-menu-item>
+            </router-link>
 
           </el-submenu>
         </el-menu>
-
       </el-aside>
 
 
@@ -55,22 +59,21 @@
 
 
 export default {
-  name: "Home",
+  name: "home",
   data() {
     return {
       username:'admin',
       imageLogo:require('@/assets/login/face_detection.gif')
     }
   },
-
+  created() {
+    this.username = localStorage.getItem("username")
+  },
   methods: {
     //退出登录
     loginOut() {
-      this.$http.post('/logout').then(res => {
-        localStorage.clear()
-        sessionStorage.clear()
-        this.$router.push("/")
-      })
+      localStorage.clear()
+      this.$router.push("/")
     },
   }
 }

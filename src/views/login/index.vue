@@ -86,6 +86,7 @@ export default {
   methods: {
     // 调用后台接口
     faceVef(){
+      // 开始绘制图片
       let imageBase = $camera.draw(this.faceOption)
       if (this.faceImgState){
         return
@@ -95,16 +96,19 @@ export default {
         this.$message.error("图片数据为空")
       }else {
         this.$http.post("/face/vef",{imageBase}).then(res =>{
-          this.faceImgState = false
           console.log(res)
+          this.faceImgState = false
           // 跳转首页
           if (res.data.code === 200){
             // 关闭摄像头
             this.faceOption.thisVideo.srcObject.getTracks()[0].stop();
             localStorage.setItem("face_token",res.data.token);
+            localStorage.setItem("username",res.data.name);
             this.$message.success(res.data.msg)
             this.$router.push("/home")
           }
+        },onerror =>{
+          this.faceImgState = false
         })
       }
     }
