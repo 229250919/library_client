@@ -72,16 +72,22 @@
     height: 200px;
     margin: 0 auto;
 }
-.face-special-effects{
+.face-special-effects,.face-special-effects-2{
     width:  300px;
     height: 300px;
-    background: url(~@/assets/login/face.gif) no-repeat;
-    background-size: 300px 300px;
     position: absolute;
     z-index: 99999999999!important;
     transform: translate(-50%,-50%);
     top: 50%;
     left: 50%;
+}
+.face-special-effects{
+    background: url(~@/assets/login/face.gif) no-repeat;
+    background-size: 300px 300px;
+}
+.face-special-effects-2{
+    background: url(~@/assets/login/face_detection.gif) no-repeat;
+    background-size: 300px 300px;
 }
 .face-btn{
     width: 100%;

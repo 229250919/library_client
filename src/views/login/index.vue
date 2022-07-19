@@ -28,8 +28,9 @@
               ></canvas>
 
           <!--人脸特效区域-->
-          <div class="face-special-effects" >
-          </div>
+          <div v-if="faceImgState" class="face-special-effects-2"></div>
+          <div v-else class="face-special-effects"></div>
+
         </div>
 
         <!--按钮区域-->
@@ -106,6 +107,9 @@ export default {
             localStorage.setItem("username",res.data.name);
             this.$message.success(res.data.msg)
             this.$router.push("/home")
+          }
+          if (res.data.code === 201){
+            this.$message.success(res.data.msg)
           }
         },onerror =>{
           this.faceImgState = false

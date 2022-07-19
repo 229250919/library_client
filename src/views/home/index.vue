@@ -4,7 +4,7 @@
     <!--头部区域-->
     <el-header>
       <div>
-        <img :src="imageLogo" style="border-radius: 50%;width: 60px;height: 60px;">
+        <img :src="imageLogo" style="width: 40px;height: 40px;margin-left: 20px">
         <router-link to="/desktop" class="logo-title">&nbsp;&nbsp;FACE-UI</router-link>
       </div>
       <el-dropdown>
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       username:'admin',
-      imageLogo:require('@/assets/login/face_detection.gif')
+      imageLogo:require('@/assets/face_logo.png')
     }
   },
   created() {

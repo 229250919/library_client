@@ -18,7 +18,7 @@ request.interceptors.request.use(config => {
 
 request.interceptors.response.use(
     response => {
-        if (response.data.code === 200){
+        if (response.data.code === 200 || response.data.code === 201){
             return response
         }else {
             Element.Message.error(response.data.msg, {duration: 3000})
