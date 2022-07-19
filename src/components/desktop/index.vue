@@ -41,6 +41,6 @@ name: "index"
   left: 50%;
   text-align: center;
   font-size: 13px;
-  color: #999;
+  color: #fff;
 }
 </style>
