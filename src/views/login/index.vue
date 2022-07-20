@@ -62,9 +62,6 @@ export default {
     return {
       videoWidth: 200,
       videoHeight: 200,
-      thisCancas: null,
-      thisContext: null,
-      thisVideo: null,
       msg:'',
       faceImgState:false,
       faceOption:{}
