@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://layui.github.io/">
-    <img src="https://thisuseravatar.oss-cn-guangzhou.aliyuncs.com/face/face_logo.png" width="81" alt="FACE-UI">
+  <a href="https://gitee.com/susantyp/face-easy">
+    <img src="https://gitee.com/susantyp/face-easy" width="81" alt="FACE-UI">
   </a>
 </p>
 <h1 align="center">FACE-UI</h1>
