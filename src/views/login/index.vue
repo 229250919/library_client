@@ -6,112 +6,65 @@
 
     <!--登录中间块-->
     <div class="login-mid">
-      <div class="login-mid-top">
-        <div class="shadow-top-left"></div>
-        <div class="shadow-top-right"></div>
-      </div>
-      <div class="login-mid-mid">
-
-        <!--捕获人脸区域-->
-        <div class="videoCamera-canvasCamera">
-              <video
-                  id="videoCamera"
-                  :width="videoWidth"
-                  :height="videoHeight"
-                  autoplay
-              ></video>
-              <canvas
-                  style="display: none"
-                  id="canvasCamera"
-                  :width="videoWidth"
-                  :height="videoHeight"
-              ></canvas>
-
-          <!--人脸特效区域-->
-          <div v-if="faceImgState" class="face-special-effects-2"></div>
-          <div v-else class="face-special-effects"></div>
-
-        </div>
-
-        <!--按钮区域-->
-        <div class="face-btn">
-          <button @click="faceVef()">{{faceImgState?'正在识别中...':'开始识别'}}</button>
-        </div>
-
-        <!--消息区域-->
-        <div class="msg">
-            <div class="server-msg">{{msg}}</div>
-            <div class="welcome">Welcome to face recognition</div>
-        </div>
-
-      </div>
-      <div class="login-mid-bot">
-        <div class="shadow-bot-left"></div>
-        <div class="shadow-bot-right"></div>
-      </div>
+      <el-form ref="loginForm" :model="loginForm" auto-complete="on" label-position="left">
+        <h3 class="title">图书馆座位预约管理系统</h3>
+        <el-form-item prop="username">
+          <el-input class="login-item" v-model="loginForm.username" style="width:80%;" name="username" type="text"
+            auto-complete="on" placeholder="username" />
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input class="login-item" type="password" v-model="loginForm.password" style="width:80%;" name="password"
+            auto-complete="on" placeholder="password" @keyup.enter.native="handleLogin" />
+        </el-form-item>
+        <el-form-item>
+          <el-button class="login-item" :loading="loading" type="primary" style="width:80%;"
+            @click.native.prevent="handleLogin">
+            登录
+          </el-button>
+        </el-form-item>
+      </el-form>
     </div>
 
 
   </div>
-
 </template>
 <script>
-import $camera from '../../camera/index.js'
 export default {
   data() {
     return {
-      videoWidth: 200,
-      videoHeight: 200,
-      msg:'',
-      faceImgState:false,
-      faceOption:{}
+      loginForm: {
+        username: '',
+        password: ''
+      },
+      loading: false
     };
   },
-  mounted() {
-    //调用摄像头
-    this.faceOption = $camera.getCamera({
-      videoWidth: 200,
-      videoHeight: 200,
-      thisCancas: null,
-      thisContext: null,
-      thisVideo: null,
-      canvasId:'canvasCamera',
-      videoId:'videoCamera'
-    });
-
-    //this.getCompetence();
-  },
   methods: {
-    // 调用后台接口
-    faceVef(){
-      // 开始绘制图片
-      let imageBase = $camera.draw(this.faceOption)
-      if (this.faceImgState){
-        return
-      }
-      this.faceImgState = true
-      if (imageBase === '' || imageBase === null || imageBase === undefined){
-        this.$message.error("图片数据为空")
-      }else {
-        this.$http.post("/face/vef",{imageBase}).then(res =>{
-          console.log(res)
-          this.faceImgState = false
-          // 跳转首页
-          if (res.data.code === 200){
-            // 关闭摄像头
-            this.faceOption.thisVideo.srcObject.getTracks()[0].stop();
-            localStorage.setItem("face_token",res.data.token);
-            localStorage.setItem("username",res.data.name);
-            this.$message.success(res.data.msg)
-            this.$router.push("/home")
-          }
-          if (res.data.code === 201){
-            this.$message.success(res.data.msg)
-          }
-        },onerror =>{
-          this.faceImgState = false
-        })
-      }
+    handleLogin() {
+      this.loading = true;
+      this.$http.post("/student/loginAdmin", this.loginForm).then(res => {
+
+        if (res.data.code === 200) {
+          localStorage.setItem("library_token", res.data.token);
+          localStorage.setItem("username", res.data.name);
+          this.$message({
+            showClose: true,
+            message: res.data.msg,
+            type: 'success',
+            duration: 3000
+          })
+          this.$router.push("/home")
+        } else {
+          this.$message({
+            showClose: true,
+            message: res.data.msg,
+            type: 'error',
+            duration: 3000
+          })
+        }
+
+      })
+      this.loading = false;
     }
   },
 };

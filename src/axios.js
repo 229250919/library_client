@@ -12,7 +12,7 @@ const request = axios.create({
 })
 
 request.interceptors.request.use(config => {
-    config.headers['face_token'] = localStorage.getItem("face_token")
+    config.headers['library_token'] = localStorage.getItem("library_token")
     return config
 })
 

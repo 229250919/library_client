@@ -1,32 +1,37 @@
-.main{
+.main {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
 }
-.el-header{
+
+.el-header {
     background-color: #008390;
-    display:flex ;
+    display: flex;
     justify-content: space-between;
     padding-left: 0;
     align-items: center;
     color: #fff;
     font-size: 20px;
 }
-.el-header>div{
+
+.el-header>div {
     height: auto;
     display: flex;
     align-items: center;
 }
-.el-header>div img{
+
+.el-header>div img {
     width: 40px;
     height: 40px;
 }
-.el-header>div span{
+
+.el-header>div span {
     margin-left: 15px;
 }
-.el-aside{
+
+.el-aside {
     background-color: #333744;
 }
 
@@ -38,17 +43,20 @@
 .el-dropdown {
     vertical-align: top;
 }
-.el-dropdown + .el-dropdown {
+
+.el-dropdown+.el-dropdown {
     margin-left: 15px;
 }
+
 .el-icon-arrow-down {
     font-size: 12px;
 }
 
-.el-main{
+.el-main {
     padding: 5px;
 }
-.toggle-button{
+
+.toggle-button {
     background-color: #4A5064;
     font-size: 10px;
     line-height: 24px;
@@ -57,17 +65,21 @@
     letter-spacing: 0.2em;
     cursor: pointer;
 }
-.el-dropdown-link{
+
+.el-dropdown-link {
     color: white;
     cursor: pointer;
 }
-.el-menu-vertical-demo{
-   height: 100%;
+
+.el-menu-vertical-demo {
+    height: 100%;
 }
-.menuitem:hover{
+
+.menuitem:hover {
     background-color: aquamarine;
 }
-.logo-title{
+
+.logo-title {
     color: #ffffff;
     text-decoration: none;
 }
