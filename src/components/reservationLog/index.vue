@@ -24,27 +24,27 @@
       <el-col :span="24">
         <el-card>
           <el-table :data="tableLogData" style="width: 100%">
-            <el-table-column width="100" prop="resevationID" label="预约号">
+            <el-table-column width="130" prop="reservationID" label="预约号">
             </el-table-column>
 
 
-            <el-table-column prop="studentID" label="学号">
+            <el-table-column width="160" prop="studentID" label="学号">
             </el-table-column>
 
 
-            <el-table-column prop="floor" label="楼层">
+            <el-table-column width="160" prop="floor" label="楼层">
             </el-table-column>
 
-            <el-table-column prop="seatNumber" label="座位号">
+            <el-table-column width="160" prop="seatNumber" label="座位号">
             </el-table-column>
 
-            <el-table-column prop="startTime" label="开始时间">
+            <el-table-column width="250" prop="startTime" label="开始时间">
             </el-table-column>
 
-            <el-table-column prop="endTime" label="结束时间">
+            <el-table-column width="250" prop="endTime" label="结束时间">
             </el-table-column>
 
-            <el-table-column width="150" prop="status" label="状态">
+            <el-table-column prop="status" label="状态">
             </el-table-column>
 
 
@@ -94,14 +94,11 @@ export default {
     },
     // 日志列表
     getResevationList() {
-      this.$http.get('/face/log/list', {
+      this.$http.get('/resRecord/list', {
         params: {
           current: this.current,
           size: this.size,
-          startTime: this.searchFace.timeArray[0],
-          endTime: this.searchFace.timeArray[1],
-          vefCode: this.searchFace.vefCode,
-          loginName: this.searchFace.loginName
+          studentID: this.searchStudentID
         }
       }).then(res => {
         this.tableLogData = res.data.data.records

@@ -21,13 +21,18 @@ const routes = [
         component: () => import('@/components/student/index')
       },
       {
+        path: '/seat',
+        name: 'seat',
+        component: () => import('@/components/seat/index')
+      },
+      {
         path: '/reservationLog',
-        name: 'log',
+        name: 'reservationLog',
         component: () => import('@/components/reservationLog/index')
       },
       {
         path: '/checkinLog',
-        name: 'log',
+        name: 'reservationLog',
         component: () => import('@/components/checkinLog/index')
       }
     ]

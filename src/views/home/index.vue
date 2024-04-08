@@ -28,15 +28,22 @@
             </el-menu-item>
           </router-link>
 
-          <router-link class="router-link-active" to="/reservationLog">
+          <router-link class="router-link-active" to="/seat">
             <el-menu-item index="2">
+              <i class="el-icon-files"></i>
+              <span slot="title">座位管理</span>
+            </el-menu-item>
+          </router-link>
+
+          <router-link class="router-link-active" to="/reservationLog">
+            <el-menu-item index="3">
               <i class="el-icon-time"></i>
               <span slot="title">预约记录</span>
             </el-menu-item>
           </router-link>
 
           <router-link class="router-link-active" to="/checkinLog">
-            <el-menu-item index="3">
+            <el-menu-item index="4">
               <i class="el-icon-edit-outline"></i>
               <span slot="title">签到记录</span>
             </el-menu-item>
