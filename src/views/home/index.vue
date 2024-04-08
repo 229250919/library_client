@@ -3,7 +3,7 @@
     <!--头部区域-->
     <el-header>
       <div class="logo-title">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图书馆座位预约管理系统
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图书馆座位预约系统
       </div>
       <el-dropdown>
         <span class="el-dropdown-link">
@@ -24,14 +24,14 @@
           <router-link class="router-link-active" to="/student">
             <el-menu-item index="1">
               <i class="el-icon-user"></i>
-              <span slot="title">读者管理</span>
+              <span slot="title">个人信息</span>
             </el-menu-item>
           </router-link>
 
           <router-link class="router-link-active" to="/seat">
             <el-menu-item index="2">
               <i class="el-icon-files"></i>
-              <span slot="title">座位管理</span>
+              <span slot="title">座位预约</span>
             </el-menu-item>
           </router-link>
 
@@ -53,7 +53,7 @@
 
       <!--右侧内容主体-->
       <el-main>
-        <router-view></router-view>
+        <router-view :username="username" @updateUsername="updateUsername"></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -72,6 +72,9 @@ export default {
     this.username = localStorage.getItem("username");
   },
   methods: {
+    updateUsername(username) {
+      this.username = username;
+    },
     //退出登录
     loginOut() {
       localStorage.clear();

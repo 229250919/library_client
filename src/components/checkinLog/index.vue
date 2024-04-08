@@ -1,28 +1,10 @@
 <template>
   <div>
 
-
-    <!--条件搜索区域-->
-    <el-row>
-      <el-col :span="24">
-        <el-card header="签到列表">
-          <el-form :inline="true">
-            <el-form-item label="学号">
-              <el-input v-model="searchStudentID" placeholder="请输入学号" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button icon="el-icon-search" @click="getResevationList">搜索</el-button>
-            </el-form-item>
-          </el-form>
-        </el-card>
-      </el-col>
-    </el-row>
-
     <!--数据表格-->
     <el-row>
       <el-col :span="24">
-        <el-card>
+        <el-card header="签到记录">
           <el-table :data="tableLogData" style="width: 100%">
             <el-table-column width="200" prop="checkinID" label="签到号">
             </el-table-column>
@@ -64,7 +46,6 @@ export default {
       size: 5,
       current: 1,
       total: 0,
-      searchStudentID: '',
       tableLogData: []
     }
   },
@@ -85,7 +66,7 @@ export default {
     },
     // 日志列表
     getCheckinList() {
-      this.$http.get('/checkinRecord/list', {
+      this.$http.get('/checkinRecord/myList', {
         params: {
           current: this.current,
           size: this.size,
