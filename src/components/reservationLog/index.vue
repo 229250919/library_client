@@ -5,7 +5,7 @@
       <el-col :span="24">
         <el-card header="预约记录">
           <el-table :data="tableLogData" style="width: 100%">
-            <el-table-column width="130" prop="reservationID" label="预约号">
+            <el-table-column width="120" prop="reservationID" label="预约号">
             </el-table-column>
 
 
@@ -13,19 +13,29 @@
             </el-table-column>
 
 
-            <el-table-column width="160" prop="floor" label="楼层">
+            <el-table-column width="100" prop="floor" label="楼层">
             </el-table-column>
 
-            <el-table-column width="160" prop="seatNumber" label="座位号">
+            <el-table-column width="100" prop="seatNumber" label="座位号">
             </el-table-column>
 
-            <el-table-column width="250" prop="startTime" label="开始时间">
+            <el-table-column width="180" prop="startTime" label="开始时间">
             </el-table-column>
 
-            <el-table-column width="250" prop="endTime" label="结束时间">
+            <el-table-column width="180" prop="endTime" label="结束时间">
             </el-table-column>
 
-            <el-table-column prop="status" label="状态">
+            <el-table-column width="150" prop="status" label="状态">
+            </el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button :disabled="!isButtonDisabled(scope.row.startTime)" icon=" el-icon-edit" size="mini"
+                  @click="handleEdit(scope.$index, scope.row)">修改时间</el-button>
+                <el-popconfirm :title="('确认取消预约吗?')" @confirm="handleDelete(scope.$index, scope.row)">
+                  <el-button :disabled="!isButtonDisabled(scope.row.startTime)" style=" margin-left: 20px"
+                    icon="el-icon-delete" size="mini" type="danger" slot="reference">取消预约</el-button>
+                </el-popconfirm>
+              </template>
             </el-table-column>
 
 
@@ -86,6 +96,26 @@ export default {
         this.total = res.data.data.total
       })
     },
+    isButtonDisabled(startTime) {
+      const currentDate = new Date(); // 当前日期时间
+      const startDate = new Date(startTime); // 开始时间
+
+      // 只比较日期，不比较时间
+      currentDate.setHours(0, 0, 0, 0);
+      startDate.setHours(0, 0, 0, 0);
+      console.log(currentDate)
+      console.log(startDate)
+
+      // 如果开始日期晚于当前日期，则按钮可用
+      return startDate > currentDate;
+    },
+    //删除
+    handleDelete(index, row) {
+      this.$http.delete("/resRecord/" + row.reservationID).then(res => {
+        this.getResevationList();
+        this.$message.success(res.data.msg)
+      })
+    }
   }
 }
 </script>

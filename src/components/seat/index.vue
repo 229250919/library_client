@@ -5,26 +5,13 @@
     <!--条件搜索区域-->
     <el-row>
       <el-col :span="24">
-        <el-card header="座位管理">
+        <el-card header="座位预约">
           <el-form :inline="true">
             <el-form-item label="楼层">
               <el-select v-model="floor" placeholder="请选择楼层" @change="handleFloorChange">
                 <el-option v-for="item in floors" :key="item" :label="item" :value="item">
                 </el-option>
               </el-select>
-            </el-form-item>
-          </el-form>
-          <el-form :inline="true">
-            <el-form-item label="楼层">
-              <el-input placeholder="请输入楼层" v-model="newSeat.floor" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="座位号">
-              <el-input placeholder="请输入座位号" v-model="newSeat.seatNumber" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button icon="el-icon-add-location" @click="addSeat">添加座位</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -49,12 +36,8 @@
 
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-popconfirm :title="('确认删除' + scope.row.floor + '楼，' + scope.row.seatNumber + '号座位吗?')"
-                  @confirm="handleDelete(scope.$index, scope.row)">
-                  <el-button style="margin-left: 20px" icon="el-icon-delete" size="mini" type="danger" slot="reference"
-                    :disabled="scope.row.status === '已预定'">删除</el-button>
-                </el-popconfirm>
-
+                <el-button style="margin-left: 20px" icon=" el-icon-edit" size="mini" type="primary" slot="reference"
+                  :disabled="scope.row.status === '已约满'" @click="reserve(scope.row)">预约</el-button>
               </template>
             </el-table-column>
 
@@ -73,6 +56,32 @@
       </el-pagination>
     </el-row>
 
+    <!-- 预约选择时间弹窗 -->
+    <el-dialog title="预约座位" :visible.sync="ResDialog" width="600px">
+      <el-form :model="ResObj" ref="ruleForm" label-width="80px">
+
+        <el-form-item label="楼层">
+          <span>{{ ResObj.floor }}</span>
+        </el-form-item>
+
+        <el-form-item label="座位号">
+          <span>{{ ResObj.seatNumber }}</span>
+        </el-form-item>
+
+        <el-form-item label="选择时间">
+          <el-checkbox-group v-model="ResObj.selectedTimes">
+            <el-checkbox v-for="time in ResTimes" :key="time.label" :label="time.label" :disabled="time.reserved">
+              {{ time.label }}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="submitReserve">立即预约</el-button>
+        </el-form-item>
+
+      </el-form>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -87,10 +96,14 @@ export default {
       floors: [],
       floor: '',
       seats: [],
-      newSeat: {
-        floor: '',
-        seatNumber: ''
-      }
+      ResDialog: false,
+      ResObj: {
+        floor: null,
+        seatNumber: null,
+        selectedTimes: [] // 用来存储用户选中的时间段
+      },
+      ResTimes: []
+      ,
     }
   },
   // 获取人脸数据
@@ -99,17 +112,17 @@ export default {
     this.getFloors()
   },
   methods: {
-    addSeat() {
-      this.$http.post("/seat/add", this.newSeat).then(res => {
+    submitReserve() {
 
-        this.$message({
-          showClose: true,
-          message: res.data.msg,
-          type: 'success',
-          duration: 3000
-        })
-        this.getSeatList()
-        this.getFloors()
+    },
+    reserve(row) {
+      this.ResDialog = true
+      this.ResObj.floor = row.floor
+      this.ResObj.seatNumber = row.seatNumber
+      this.ResObj.selectedTimes = []
+      // 获取当前用户可以预约该座位的时间表（座位空闲时间和用户空闲时间，用户同一时间只能预约一个）
+      this.$http.get("/seat/times/" + row.floor + "/" + row.seatNumber).then(res => {
+        this.ResTimes = res.data.data
       })
     },
     handleFloorChange(val) {
@@ -146,14 +159,6 @@ export default {
         this.floors = res.data.data
       })
     },
-    //删除
-    handleDelete(index, row) {
-      console.log(index, row);
-      this.$http.delete("/seat/" + row.floor + '/' + row.seatNumber).then(res => {
-        this.getSeatList();
-        this.$message.success(res.data.msg)
-      })
-    }
   }
 }
 </script>
