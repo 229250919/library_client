@@ -113,7 +113,26 @@ export default {
   },
   methods: {
     submitReserve() {
+      this.$http.post("/seat/reserve/" + this.ResObj.floor + "/" + this.ResObj.seatNumber, this.ResObj.selectedTimes).then(res => {
+        if (res.data.code >= 0) {
+          this.$message({
+            showClose: true,
+            message: res.data.msg,
+            type: 'success',
+            duration: 3000
+          })
+          this.getSeatList()
+        } else {
+          this.$message({
+            showClose: true,
+            message: res.data.msg,
+            type: 'error',
+            duration: 3000
+          })
+        }
 
+        this.ResDialog = false
+      })
     },
     reserve(row) {
       this.ResDialog = true

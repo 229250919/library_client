@@ -165,9 +165,9 @@ export default {
   methods: {
     // 录入
     enteringFace() {
-      this.studentObj.faceBase = $camera.draw(this.faceOption)
+      this.studentObjT.faceBase = $camera.draw(this.faceOption)
       let faceBase = document.getElementById("faceBase");
-      faceBase.innerHTML = "<img src='" + this.studentObj.faceBase + "' />"
+      faceBase.innerHTML = "<img src='" + this.studentObjT.faceBase + "' />"
     },
     // 提交修改
     submitForm(formName) {
