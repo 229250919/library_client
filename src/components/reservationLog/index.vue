@@ -29,8 +29,6 @@
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button :disabled="!isButtonDisabled(scope.row.startTime)" icon=" el-icon-edit" size="mini"
-                  @click="handleEdit(scope.$index, scope.row)">修改时间</el-button>
                 <el-popconfirm :title="('确认取消预约吗?')" @confirm="handleDelete(scope.$index, scope.row)">
                   <el-button :disabled="!isButtonDisabled(scope.row.startTime)" style=" margin-left: 20px"
                     icon="el-icon-delete" size="mini" type="danger" slot="reference">取消预约</el-button>

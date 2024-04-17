@@ -163,6 +163,7 @@ export default {
     this.getUserInfo()
   },
   methods: {
+    
     // 录入
     enteringFace() {
       this.studentObjT.faceBase = $camera.draw(this.faceOption)
