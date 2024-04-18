@@ -22,18 +22,11 @@
         <el-card header="环境数据" style="margin-top: 20px;">
           <el-form :inline="true">
             <el-form-item v-if="temperature !== null">
-              <span style="font-size: 30px;">温度：{{ temperature }} °C</span>
+              <span style="font-size: 30px;">温度：{{ temperature }} °C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </el-form-item>
             <el-form-item v-if="humidity !== null">
               <span style="font-size: 30px;">湿度：{{ humidity }} %</span>
             </el-form-item>
-            <!-- <el-form-item label="灯" v-if="lamp !== null">
-              <label>灯：</label>
-              <el-switch v-model="lamp" active-color="#13ce66" inactive-color="#ff4949">
-                <template v-slot:open>开</template>
-                <template v-slot:close>关</template>
-              </el-switch>
-            </el-form-item> -->
           </el-form>
         </el-card>
       </el-col>
@@ -127,8 +120,7 @@ export default {
       },
       ResTimes: [],
       temperature: null,
-      humidity: null,
-      lamp: null
+      humidity: null
     }
   },
   watch: {
@@ -168,11 +160,9 @@ export default {
           case 'floor':
             // #36#34#off 温度 湿度 灯
             const value = message.split('#');
-            console.log(value)
             // ['', '32', '36', 'off']
             _this.temperature = value[1];
             _this.humidity = value[2];
-            _this.lamp = value[3];
             break;
         }
       });
